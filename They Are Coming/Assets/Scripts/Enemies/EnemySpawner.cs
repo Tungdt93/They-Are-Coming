@@ -52,7 +52,7 @@ public class EnemySpawner : MonoBehaviour
         if (timer >= timeToSpawm)
         {
             spawnPosition = RandomSpawnPosition();
-            Instantiate(enemyPrefab, spawnPosition, transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+            Instantiate(enemyPrefab, spawnPosition, transform.rotation * Quaternion.Euler(0f, 180f, 0f), this.transform);
             totalEnemiesSpawned += 1;
             timeToSpawm += 0.2f;
         }

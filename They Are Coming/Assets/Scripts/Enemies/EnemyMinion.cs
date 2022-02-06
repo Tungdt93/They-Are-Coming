@@ -8,6 +8,7 @@ public class EnemyMinion : MonoBehaviour, IDamageable
     private CharacterController controller;
     private NavMeshAgent agent;
     private Vector3 direction;
+    private bool isChasing;
 
     private void OnEnable()
     {
@@ -18,7 +19,10 @@ public class EnemyMinion : MonoBehaviour, IDamageable
     private void Update()
     {
         CheckPlayerInRange();
-        Move();
+        if (!isChasing)
+        {
+            Move();
+        }      
     }
 
     private void InitializeVariables()
@@ -52,10 +56,10 @@ public class EnemyMinion : MonoBehaviour, IDamageable
     {
         Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, enemyInfo.radiusCheck);
         foreach (var hitCollider in hitColliders)
-        {
-           
+        {  
             if (hitCollider.gameObject.CompareTag("PlayerMinion"))
-            {              
+            {
+                isChasing = true;
                 agent.speed = enemyInfo.chaseSpeed;
                 agent.SetDestination(hitCollider.gameObject.transform.position);
             }

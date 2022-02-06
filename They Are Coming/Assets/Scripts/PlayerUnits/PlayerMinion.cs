@@ -25,11 +25,6 @@ public class PlayerMinion : PlayerUnit
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(this.transform.position, 10f);
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("RightWall"))
