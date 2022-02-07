@@ -6,4 +6,9 @@ public class AK47 : Weapon
     {
         InstantiateModel();
     }
+
+    private void Update() 
+    {
+        Fire();
+    }
 }

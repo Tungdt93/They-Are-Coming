@@ -4,10 +4,12 @@ using UnityEngine.AI;
 public class EnemyMinion : MonoBehaviour, IDamageable
 {
     [SerializeField] private EnemyInfomation enemyInfo;
+    [SerializeField] private Transform target;
 
     private CharacterController controller;
     private NavMeshAgent agent;
     private Vector3 direction;
+
     private bool isChasing;
 
     private void OnEnable()
@@ -19,10 +21,20 @@ public class EnemyMinion : MonoBehaviour, IDamageable
     private void Update()
     {
         CheckPlayerInRange();
-        if (!isChasing)
+        if (isChasing)
+        {
+            ChasingPlayer();
+        }      
+        else 
         {
             Move();
-        }      
+        }
+    }
+
+    private void ChasingPlayer() 
+    {
+        agent.speed = enemyInfo.chaseSpeed; 
+        agent.SetDestination(target.position);
     }
 
     private void InitializeVariables()
@@ -47,6 +59,14 @@ public class EnemyMinion : MonoBehaviour, IDamageable
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PlayerMinion"))
+        {
+            other.gameObject.SetActive(false);
+        }
+    }
+
     private void Move()
     {
         controller.Move(enemyInfo.moveSpeed * Time.deltaTime * direction);
@@ -60,15 +80,8 @@ public class EnemyMinion : MonoBehaviour, IDamageable
             if (hitCollider.gameObject.CompareTag("PlayerMinion"))
             {
                 isChasing = true;
-                agent.speed = enemyInfo.chaseSpeed;
-                agent.SetDestination(hitCollider.gameObject.transform.position);
+                target = hitCollider.transform;       
             }
-
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(this.transform.position, enemyInfo.radiusCheck);
     }
 }

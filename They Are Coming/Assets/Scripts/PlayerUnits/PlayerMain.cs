@@ -98,6 +98,7 @@ public class PlayerMain : PlayerUnit
 
     private void OnTriggerEnter(Collider other)
     {
+        #region PowerUp
         if (other.CompareTag("PowerUp"))
         {
             if (other.TryGetComponent(out PowerUp powerUp))
@@ -114,5 +115,17 @@ public class PlayerMain : PlayerUnit
                 powerUp.InvokeEvent();
             }
         }
+        #endregion
+
+        #region Weapon
+        if (other.CompareTag("Weapon"))
+        {
+            if (other.TryGetComponent(out Weapon weapon))
+            {
+                
+            }
+        }
+        #endregion
+
     }
 }

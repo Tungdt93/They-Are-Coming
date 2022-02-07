@@ -16,13 +16,6 @@ public abstract class PlayerUnit : MonoBehaviour
 
     public bool isControlling;
 
-
-    public void InstantiateModel()
-    {
-        Instantiate(unitInfo.model, this.visual.transform);
-        Instantiate(weapon.gameObject, weaponHolder.transform);
-    }
-
     public void GenerateFirstMinion()
     {
         Instantiate(playerMinionPrefab, spawnPosition.transform.position, Quaternion.identity, transform);

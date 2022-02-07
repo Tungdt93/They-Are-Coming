@@ -13,4 +13,5 @@ public class WeaponInfomation : ScriptableObject
 
     [Header("Gun Model")]
     public GameObject model;
+    public GameObject barrel;
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMinion : PlayerUnit
 {
@@ -12,17 +11,15 @@ public class PlayerMinion : PlayerUnit
         InstantiateModel();
     }
 
+        public void InstantiateModel()
+    {
+        Instantiate(unitInfo.model, this.visual.transform);
+        Instantiate(weapon.gameObject, weaponHolder.transform);
+    }
+
     private void Update()
     {
         rb.velocity = Vector3.zero;   
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("EnemyMinion"))
-        {
-            gameObject.SetActive(false);
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
