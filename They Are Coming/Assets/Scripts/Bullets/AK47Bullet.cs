@@ -13,6 +13,7 @@ public class AK47Bullet : Bullet
     {
         rb = GetComponent<Rigidbody>();
         direction = Vector3.forward;
+        timeDelay = 3f;
     }
 
     private void InstantiateModel()
@@ -20,4 +21,8 @@ public class AK47Bullet : Bullet
         Instantiate(bulletInfo.model, transform.position, Quaternion.identity, transform);
     }
 
+    private void Update() 
+    {
+        DestroyBullet();
+    }
 }

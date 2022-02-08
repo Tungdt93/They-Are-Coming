@@ -9,7 +9,7 @@ public class WeaponInfomation : ScriptableObject
     [Header("Gun Stats")]
     public GameObject barrel;
     public int damage;
-    public int fireRate;
+    public float fireRate;
 
     [Header("Gun Model")]
     public GameObject model;

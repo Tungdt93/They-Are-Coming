@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 012f99bff5703884494734858007b8e0, type: 3}
-  m_Name: AK47
+  m_Name: AUG
   m_EditorClassIdentifier: 
-  name: AK-47
-  barrel: {fileID: 3956149728592414582, guid: 9c2e15ce17be92e4da3a350e5c33af58, type: 3}
-  damage: 10
-  fireRate: 1
-  model: {fileID: 2827738376716261153, guid: 9c2e15ce17be92e4da3a350e5c33af58, type: 3}
+  name: AUG
+  barrel: {fileID: 0}
+  damage: 15
+  fireRate: 0.8
+  model: {fileID: 7315315126468033817, guid: a5686089a4bb5ac468df3ae8f8179161, type: 3}

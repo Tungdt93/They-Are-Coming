@@ -11,6 +11,7 @@ TagManager:
   - PlayerUnit
   - PlayerMinion
   - EnemyMinion
+  - Obstacle
   layers:
   - Default
   - TransparentFX

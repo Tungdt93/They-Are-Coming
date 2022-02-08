@@ -1,14 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerMinion : PlayerUnit
 {
-    private PlayerMain playerMain;
-
     private void OnEnable()
     {
-        playerMain = PlayerMain.Instance;
         rb = GetComponent<Rigidbody>();
-        InstantiateModel();
+        InitializeVariables();
+        InitializeModel();
     }
 
     private void Update()
@@ -16,12 +15,11 @@ public class PlayerMinion : PlayerUnit
         rb.velocity = Vector3.zero;
     }
 
-    public void InstantiateModel()
+    public void InitializeModel()
     {
         Instantiate(unitInfo.model, this.visual.transform);
         Instantiate(playerMain.Weapon.gameObject, weaponHolder.transform);
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("RightWall"))
@@ -60,4 +58,11 @@ public class PlayerMinion : PlayerUnit
             playerMain.HasTouchedLeftWall = false;
         }
     }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Obstacle"))
+        {
+            Destroy(this.gameObject);
+        }
+    }   
 }

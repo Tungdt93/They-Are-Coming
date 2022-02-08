@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public class AK47 : Weapon
+public class AUG : Weapon
 {
+    // Start is called before the first frame update
     private void OnEnable()
     {
         InitializeModel();
-        //InitializeVariables();
     }
 
     private void Update() 

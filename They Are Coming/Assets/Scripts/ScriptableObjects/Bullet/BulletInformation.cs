@@ -7,7 +7,6 @@ public class BulletInformation : ScriptableObject
     public new string name;
 
     [Header("Stats")]
-    public int damage;
     public float moveSpeed;
 
     [Header("Model")]

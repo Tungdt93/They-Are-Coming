@@ -67,7 +67,7 @@ public class PlayerMain : MonoBehaviour
     }
     private void GenerateFirstMinion()
     {
-        Instantiate(minionPrefab, spawnPosition.transform.position, Quaternion.identity, transform);
+        Instantiate(minionPrefab, spawnPosition.transform.position, Quaternion.identity, spawnPosition.transform);
     }
 
     private void Move()
@@ -83,7 +83,7 @@ public class PlayerMain : MonoBehaviour
             Vector3 randomPosition = new Vector3(spawnPosition.transform.position.x + randomRange.x,
                 spawnPosition.transform.position.y,
                 spawnPosition.transform.position.z + randomRange.y);
-            Instantiate(minionPrefab, randomPosition, Quaternion.identity, transform);
+            Instantiate(minionPrefab, randomPosition, Quaternion.identity, spawnPosition.transform);
         }
     }
 
@@ -147,15 +147,22 @@ public class PlayerMain : MonoBehaviour
         }
         #endregion
 
-        #region Weapon
-        if (other.CompareTag("Weapon"))
-        {
-            if (other.TryGetComponent(out Weapon weapon))
-            {
+        // #region Weapon
+        // if (other.CompareTag("Weapon"))
+        // {
+        //     if (other.TryGetComponent(out Weapon weapon))
+        //     {
                 
-            }
-        }
-        #endregion
+        //     }
+        // }
+        // #endregion
+    }
 
+    private void CircleRadius() 
+    {
+        foreach (Transform transform in spawnPosition.transform)
+        {
+            
+        }
     }
 }

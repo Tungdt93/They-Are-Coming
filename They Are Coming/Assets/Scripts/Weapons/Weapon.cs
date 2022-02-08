@@ -4,20 +4,32 @@ public abstract class Weapon : MonoBehaviour
 {
     public WeaponInfomation weaponInfo;
     public GameObject bulletType;
+    public float nextFire;
+    public bool pickedUp;
 
-    public void InstantiateModel()
+    public void InitializeModel()
     {
         weaponInfo.barrel = weaponInfo.model.transform.GetChild(0).gameObject;
-        GameObject weapon = Instantiate(weaponInfo.model, transform);
+        Instantiate(weaponInfo.model, transform);
     }
 
+    public void InitializeVariables() 
+    {
+        pickedUp = false;
+    }
+    
     public void Fire()
     {
-        InvokeRepeating("InstaniateProjectile", 0f, weaponInfo.fireRate);
+        if (Time.time > nextFire) 
+        {
+            nextFire = Time.time + weaponInfo.fireRate;
+            InitializeProjectile();
+        }
     }
 
-    public void InstaniateProjectile() 
+    public void InitializeProjectile() 
     {
-        GameObject newBullet = Instantiate(bulletType, weaponInfo.barrel.transform.position, Quaternion.identity, this.transform);
+        GameObject newBullet = Instantiate(bulletType, transform.position, Quaternion.identity, GameManager.Instance.BulletStorgage.transform);   
+        newBullet.GetComponent<Bullet>().gunDamage = weaponInfo.damage;    
     }
 }

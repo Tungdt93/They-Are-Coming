@@ -6,13 +6,15 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float timeToSpawm;
+    [SerializeField] private float respawnCooldown;
+    [SerializeField] private int enemiesSpawned;
+    [SerializeField] private int maxEnemiesSpawned;
 
     private Vector3 spawnPosition;
     private Vector3 direction;
     private bool isSpawning;
+    private float timeToSpawn;
     private float timer;
-    private int totalEnemiesSpawned;
 
     private void OnEnable()
     {
@@ -25,8 +27,6 @@ public class EnemySpawner : MonoBehaviour
         isSpawning = true;
         direction = Vector3.back;
         timer = 0f;
-        totalEnemiesSpawned = 0;
-
     }
 
     private void Update()
@@ -49,12 +49,12 @@ public class EnemySpawner : MonoBehaviour
         }
 
         timer = Time.time;
-        if (timer >= timeToSpawm)
+        if (timer >= timeToSpawn)
         {
             spawnPosition = RandomSpawnPosition();
             Instantiate(enemyPrefab, spawnPosition, transform.rotation * Quaternion.Euler(0f, 180f, 0f), this.transform);
-            totalEnemiesSpawned += 1;
-            timeToSpawm += 0.2f;
+            enemiesSpawned += 1;
+            timeToSpawn += respawnCooldown;
         }
     }
 
@@ -69,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void LimitEnemiesSpawned()
     {
-        if (totalEnemiesSpawned >= 100)
+        if (enemiesSpawned >= maxEnemiesSpawned)
         {
             isSpawning = false;
         }

@@ -5,6 +5,7 @@ public class EnemyMinion : MonoBehaviour, IDamageable
 {
     [SerializeField] private EnemyInfomation enemyInfo;
     [SerializeField] private Transform target;
+    [SerializeField] private float currentHealth;
 
     private CharacterController controller;
     private NavMeshAgent agent;
@@ -42,6 +43,7 @@ public class EnemyMinion : MonoBehaviour, IDamageable
         controller = GetComponent<CharacterController>();
         agent = GetComponent<NavMeshAgent>();
         direction = Vector3.back;
+        currentHealth = enemyInfo.health;
     }
 
     private void InstantiateModel()
@@ -51,7 +53,11 @@ public class EnemyMinion : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
-        enemyInfo.health -= damage;
+        currentHealth -= damage;
+        if (currentHealth <= 0) 
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void OnDeath()
