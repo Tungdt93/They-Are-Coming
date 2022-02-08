@@ -8,6 +8,6 @@ public abstract class Bullet : MonoBehaviour, IProjectile
 
     public void OnAddingForce()
     {
-        
+        rb.AddForce(bulletInfo.moveSpeed * Time.deltaTime * direction);
     }
 }

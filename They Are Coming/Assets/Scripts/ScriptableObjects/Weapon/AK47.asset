@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AK47
   m_EditorClassIdentifier: 
   name: AK-47
-  spawnPoint: {fileID: 0}
+  barrel: {fileID: 3956149728592414582, guid: 9c2e15ce17be92e4da3a350e5c33af58, type: 3}
   damage: 5
   fireRate: 1
   model: {fileID: 2827738376716261153, guid: 9c2e15ce17be92e4da3a350e5c33af58, type: 3}

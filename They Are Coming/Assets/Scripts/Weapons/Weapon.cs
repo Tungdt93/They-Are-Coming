@@ -7,9 +7,8 @@ public abstract class Weapon : MonoBehaviour
 
     public void InstantiateModel()
     {
-        weaponInfo.spawnPoint = weaponInfo.model.transform.GetChild(0).gameObject;
+        weaponInfo.barrel = weaponInfo.model.transform.GetChild(0).gameObject;
         GameObject weapon = Instantiate(weaponInfo.model, transform);
-        weapon.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
     }
 
     public void Fire()
@@ -19,6 +18,6 @@ public abstract class Weapon : MonoBehaviour
 
     public void InstaniateProjectile() 
     {
-        GameObject newBullet = Instantiate(bulletType, weaponInfo.barrel.transform.position, Quaternion.identity, transform);
+        GameObject newBullet = Instantiate(bulletType, weaponInfo.barrel.transform.position, Quaternion.identity, this.transform);
     }
 }

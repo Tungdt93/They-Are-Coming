@@ -8,8 +8,6 @@ public class PlayerUnitInfomation : ScriptableObject
 
     [Header("Stats")]
     public int health;
-    public float moveSpeed;
-    public float sideSpeed;
 
     [Header("Model")]
     public GameObject model;

@@ -7,11 +7,10 @@ public class WeaponInfomation : ScriptableObject
     public new string name;
 
     [Header("Gun Stats")]
-    public GameObject spawnPoint;
+    public GameObject barrel;
     public int damage;
     public int fireRate;
 
     [Header("Gun Model")]
     public GameObject model;
-    public GameObject barrel;
 }

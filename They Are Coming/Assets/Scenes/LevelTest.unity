@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1577,20 +1577,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f6078fdaeeb0747af5864bdd74d2e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMinionPrefab: {fileID: 2149368057723459541, guid: 83204740cee9bfa4b9af12e7bf07edbf,
+  minionPrefab: {fileID: 2149368057723459541, guid: 83204740cee9bfa4b9af12e7bf07edbf,
     type: 3}
   spawnPosition: {fileID: 82448256}
-  visual: {fileID: 0}
-  weaponHolder: {fileID: 0}
-  rb: {fileID: 0}
-  controller: {fileID: 0}
-  unitInfo: {fileID: 11400000, guid: c519197d3797f7e44af378de0e9d3057, type: 2}
-  weapon: {fileID: 0}
-  velocity: {x: 0, y: 0, z: 0}
-  sideDirection: {x: 0, y: 0, z: 0}
-  isControlling: 0
-  sideSpeed: 0
-  defaultSideSpeed: 0
+  weapon: {fileID: 6557206044080043268, guid: a64f7eb17a9e7cc4c99c4febee1ce3fd, type: 3}
+  moveSpeed: 10
+  sideSpeed: 35
 --- !u!23 &1200300237
 MeshRenderer:
   m_ObjectHideFlags: 0

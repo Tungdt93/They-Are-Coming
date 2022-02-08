@@ -1,15 +1,21 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
-public class PlayerMain : PlayerUnit
+public class PlayerMain : MonoBehaviour
 {
     public static PlayerMain Instance;
-
+    [SerializeField] private GameObject minionPrefab;
+    [SerializeField] private GameObject spawnPosition;
+    [SerializeField] private Weapon weapon;
+    [SerializeField] private float moveSpeed;
     [SerializeField] private float sideSpeed;
-    [SerializeField] private float defaultSideSpeed;
 
+    private CharacterController controller;
     private PlayerInput inputActions;
+    private Vector3 velocity;
+    private Vector3 sideDirection;
     private bool hasTouchedRightWall;
     private bool hasTouchedLeftWall;
     private int minions;
@@ -18,8 +24,19 @@ public class PlayerMain : PlayerUnit
     public int Minions { get => minions; set => minions = value; }
     public bool HasTouchedRightWall { get => hasTouchedRightWall; set => hasTouchedRightWall = value; }
     public bool HasTouchedLeftWall { get => hasTouchedLeftWall; set => hasTouchedLeftWall = value; }
+    public Weapon Weapon { get => weapon; set => weapon = value; }
 
     private void Start()
+    {
+        InitializeSingleton();
+        InitializeVariables(); 
+    }
+    public void OnDisable()
+    {
+        inputActions.Disable();
+    }
+
+    private void InitializeSingleton()
     {
         if (Instance != null && Instance != this)
         {
@@ -29,18 +46,10 @@ public class PlayerMain : PlayerUnit
         {
             Instance = this;
         }
-
-        InitializeVariables(); 
-    }
-
-    public void OnDisable()
-    {
-        inputActions.Disable();
     }
 
     private void InitializeVariables()
     {
-        sideSpeed = defaultSideSpeed = unitInfo.sideSpeed;
         hasTouchedRightWall = false;
         hasTouchedLeftWall = false;
         velocity = Vector3.back;
@@ -56,13 +65,38 @@ public class PlayerMain : PlayerUnit
         Move(); 
         MoveSideways();
     }
-
-    public void Move()
+    private void GenerateFirstMinion()
     {
-        controller.Move(unitInfo.moveSpeed * Time.deltaTime * velocity);
+        Instantiate(minionPrefab, spawnPosition.transform.position, Quaternion.identity, transform);
     }
 
-    public void MoveSideways()
+    private void Move()
+    {
+        controller.Move(moveSpeed * Time.deltaTime * velocity);
+    }
+
+    public void GenerateNewMinions(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            Vector2 randomRange = Random.insideUnitCircle;
+            Vector3 randomPosition = new Vector3(spawnPosition.transform.position.x + randomRange.x,
+                spawnPosition.transform.position.y,
+                spawnPosition.transform.position.z + randomRange.y);
+            Instantiate(minionPrefab, randomPosition, Quaternion.identity, transform);
+        }
+    }
+
+    public Vector3 RandomPosition(Vector3 center, float radius)
+    {
+        Vector3 position;
+        position.x = center.x + Random.Range(-radius, radius);
+        position.y = center.y;
+        position.z = center.z + Random.Range(-radius, radius);
+        return position;
+    }
+
+    private void MoveSideways()
     {
         Vector2 movementInput = inputActions.Player.Move.ReadValue<Vector2>();
         Vector3 move = new Vector3(movementInput.x, 0f, 0f);
@@ -72,20 +106,16 @@ public class PlayerMain : PlayerUnit
             {
                 if (hasTouchedRightWall)
                 {
-                    sideSpeed = 0;
                     return;
                 }
-                sideSpeed = defaultSideSpeed;
                 sideDirection = Vector3.right;
             }
             else if (move.x < 0)
             {
                 if (hasTouchedLeftWall)
                 {
-                    sideSpeed = 0;
                     return;
                 }
-                sideSpeed = defaultSideSpeed;
                 sideDirection = Vector3.left;
             }
         }

@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4c1182b3546344b99b9864638d1621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponInfomation: {fileID: 11400000, guid: 114e2cb8cdc1b2540bbd42ba134d3fad, type: 2}
+  weaponInfo: {fileID: 11400000, guid: 114e2cb8cdc1b2540bbd42ba134d3fad, type: 2}
   bulletType: {fileID: 4390829629235698029, guid: f80771b1380b0644d95760eea755997a,
     type: 3}
-  elapsedTime: 0
