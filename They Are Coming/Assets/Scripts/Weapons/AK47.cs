@@ -5,7 +5,7 @@ public class AK47 : Weapon
     private void OnEnable()
     {
         InitializeModel();
-        //InitializeVariables();
+        InitializeVariables();
     }
 
     private void Update() 

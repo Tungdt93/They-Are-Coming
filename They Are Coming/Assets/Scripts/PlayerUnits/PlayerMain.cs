@@ -6,6 +6,9 @@ using Random = UnityEngine.Random;
 public class PlayerMain : MonoBehaviour
 {
     public static PlayerMain Instance;
+
+    public event Action OnPickedUpNewWeapon = delegate { };
+
     [SerializeField] private GameObject minionPrefab;
     [SerializeField] private GameObject spawnPosition;
     [SerializeField] private Weapon weapon;
@@ -18,13 +21,15 @@ public class PlayerMain : MonoBehaviour
     private Vector3 sideDirection;
     private bool hasTouchedRightWall;
     private bool hasTouchedLeftWall;
+    private bool hasNewWeapon;
     private int minions;
 
     public GameObject SpawnPosition { get => spawnPosition; set => spawnPosition = value; }
-    public int Minions { get => minions; set => minions = value; }
+    public Weapon Weapon { get => weapon; set => weapon = value; }
     public bool HasTouchedRightWall { get => hasTouchedRightWall; set => hasTouchedRightWall = value; }
     public bool HasTouchedLeftWall { get => hasTouchedLeftWall; set => hasTouchedLeftWall = value; }
-    public Weapon Weapon { get => weapon; set => weapon = value; }
+    public bool HasNewWeapon { get => hasNewWeapon; set => hasNewWeapon = value; }
+    public int Minions { get => minions; set => minions = value; }
 
     private void Start()
     {
@@ -50,14 +55,14 @@ public class PlayerMain : MonoBehaviour
 
     private void InitializeVariables()
     {
-        hasTouchedRightWall = false;
-        hasTouchedLeftWall = false;
-        velocity = Vector3.back;
         inputActions = new PlayerInput();
         inputActions.Enable();
         controller = GetComponent<CharacterController>();
         GenerateFirstMinion();
-        minions = transform.childCount;
+        velocity = Vector3.back;
+        hasTouchedRightWall = false;
+        hasTouchedLeftWall = false;
+        hasNewWeapon = true;
     }
 
     private void Update()
@@ -147,15 +152,18 @@ public class PlayerMain : MonoBehaviour
         }
         #endregion
 
-        // #region Weapon
-        // if (other.CompareTag("Weapon"))
-        // {
-        //     if (other.TryGetComponent(out Weapon weapon))
-        //     {
-                
-        //     }
-        // }
-        // #endregion
+        #region Weapon
+        if (other.CompareTag("Weapon"))
+        {
+            if (other.TryGetComponent(out AK47 newWeapon))
+            {
+                this.weapon = newWeapon;
+                OnPickedUpNewWeapon?.Invoke();
+                //newWeapon.DisableVisual();
+            }
+            //other.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        #endregion
     }
 
     private void CircleRadius() 

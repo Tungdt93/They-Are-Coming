@@ -13,6 +13,11 @@ public abstract class Bullet : MonoBehaviour, IProjectile
         Destroy(gameObject, timeDelay);
     }
 
+    public void InstantiateModel()
+    {
+        Instantiate(bulletInfo.model, transform.position, Quaternion.identity, transform);
+    }
+
     public void OnAddingForce()
     {
         rb.AddForce(bulletInfo.moveSpeed * direction, ForceMode.VelocityChange);      

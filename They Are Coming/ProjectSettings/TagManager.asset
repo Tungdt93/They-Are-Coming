@@ -12,6 +12,7 @@ TagManager:
   - PlayerMinion
   - EnemyMinion
   - Obstacle
+  - Weapon
   layers:
   - Default
   - TransparentFX

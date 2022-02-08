@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class AUG : Weapon
 {
-    // Start is called before the first frame update
     private void OnEnable()
     {
         InitializeModel();
+        InitializeVariables();
     }
 
     private void Update() 

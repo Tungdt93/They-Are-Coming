@@ -7,7 +7,6 @@ public class WeaponInfomation : ScriptableObject
     public new string name;
 
     [Header("Gun Stats")]
-    public GameObject barrel;
     public int damage;
     public float fireRate;
 

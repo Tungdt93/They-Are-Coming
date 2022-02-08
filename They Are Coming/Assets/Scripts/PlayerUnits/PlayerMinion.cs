@@ -8,6 +8,12 @@ public class PlayerMinion : PlayerUnit
         rb = GetComponent<Rigidbody>();
         InitializeVariables();
         InitializeModel();
+        playerMain.OnPickedUpNewWeapon += InitializeWeapon;
+    }
+
+    private void OnDisable()
+    {
+        playerMain.OnPickedUpNewWeapon -= InitializeWeapon;
     }
 
     private void Update()
@@ -17,9 +23,9 @@ public class PlayerMinion : PlayerUnit
 
     public void InitializeModel()
     {
-        Instantiate(unitInfo.model, this.visual.transform);
-        Instantiate(playerMain.Weapon.gameObject, weaponHolder.transform);
+        Instantiate(unitInfo.model, this.visual.transform);    
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("RightWall"))

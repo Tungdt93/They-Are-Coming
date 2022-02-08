@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AUGBullet : MonoBehaviour
+public class AUGBullet : Bullet
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
+        InitializeVariables();
+        InstantiateModel();
+        OnAddingForce();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void InitializeVariables()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        direction = Vector3.forward;
+    }
+
+    private void Update()
+    {
+        DestroyBullet();
     }
 }
