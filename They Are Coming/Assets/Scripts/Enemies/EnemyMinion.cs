@@ -7,8 +7,8 @@ public class EnemyMinion : MonoBehaviour, IDamageable
     [SerializeField] private Transform target;
     [SerializeField] private float currentHealth;
 
+    private Rigidbody rb;
     private CharacterController controller;
-    private NavMeshAgent agent;
     private Vector3 direction;
 
     private bool isChasing;
@@ -22,26 +22,13 @@ public class EnemyMinion : MonoBehaviour, IDamageable
     private void Update()
     {
         CheckPlayerInRange();
-        if (isChasing)
-        {
-            ChasingPlayer();
-        }      
-        else 
-        {
-            Move();
-        }
-    }
-
-    private void ChasingPlayer() 
-    {
-        agent.speed = enemyInfo.chaseSpeed; 
-        agent.SetDestination(target.position);
+        Move();
     }
 
     private void InitializeVariables()
     {
+        rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
-        agent = GetComponent<NavMeshAgent>();
         direction = Vector3.back;
         currentHealth = enemyInfo.health;
     }
@@ -75,7 +62,8 @@ public class EnemyMinion : MonoBehaviour, IDamageable
 
     private void Move()
     {
-        controller.Move(enemyInfo.moveSpeed * Time.deltaTime * direction);
+        controller.Move(enemyInfo.moveSpeed * Time.deltaTime * direction.normalized);
+        //MovePosition(transform.position + enemyInfo.moveSpeed * Time.deltaTime * direction);
     }
 
     private void CheckPlayerInRange()
@@ -85,8 +73,10 @@ public class EnemyMinion : MonoBehaviour, IDamageable
         {  
             if (hitCollider.gameObject.CompareTag("PlayerMinion"))
             {
-                isChasing = true;
-                target = hitCollider.transform;       
+                Vector3 newDirection = new Vector3(hitCollider.gameObject.transform.position.x - transform.position.x,
+                0f,
+                hitCollider.gameObject.transform.position.z - transform.position.z);
+                direction = newDirection;      
             }
         }
     }

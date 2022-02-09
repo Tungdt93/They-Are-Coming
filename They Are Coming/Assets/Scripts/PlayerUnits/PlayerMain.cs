@@ -11,6 +11,7 @@ public class PlayerMain : MonoBehaviour
 
     [SerializeField] private GameObject minionPrefab;
     [SerializeField] private GameObject spawnPosition;
+    [SerializeField] private GameObject weaponPrefab;
     [SerializeField] private Weapon weapon;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float sideSpeed;
@@ -25,6 +26,7 @@ public class PlayerMain : MonoBehaviour
     private int minions;
 
     public GameObject SpawnPosition { get => spawnPosition; set => spawnPosition = value; }
+    public GameObject WeaponPrefab { get => weaponPrefab; set => weaponPrefab = value; }
     public Weapon Weapon { get => weapon; set => weapon = value; }
     public bool HasTouchedRightWall { get => hasTouchedRightWall; set => hasTouchedRightWall = value; }
     public bool HasTouchedLeftWall { get => hasTouchedLeftWall; set => hasTouchedLeftWall = value; }
@@ -155,13 +157,14 @@ public class PlayerMain : MonoBehaviour
         #region Weapon
         if (other.CompareTag("Weapon"))
         {
-            if (other.TryGetComponent(out AK47 newWeapon))
+            if (other.TryGetComponent(out Weapon newWeapon))
             {
-                this.weapon = newWeapon;
+                GameObject newWeaponPrefab = other.gameObject;
+                weaponPrefab = newWeaponPrefab;
+                weapon = weaponPrefab.GetComponent<Weapon>();
                 OnPickedUpNewWeapon?.Invoke();
-                //newWeapon.DisableVisual();
             }
-            //other.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            other.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
         #endregion
     }

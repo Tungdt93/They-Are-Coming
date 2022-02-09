@@ -11,12 +11,6 @@ public class AUGBullet : Bullet
         OnAddingForce();
     }
 
-    private void InitializeVariables()
-    {
-        rb = GetComponent<Rigidbody>();
-        direction = Vector3.forward;
-    }
-
     private void Update()
     {
         DestroyBullet();

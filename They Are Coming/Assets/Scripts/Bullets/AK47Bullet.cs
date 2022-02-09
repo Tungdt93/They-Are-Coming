@@ -9,12 +9,6 @@ public class AK47Bullet : Bullet
         OnAddingForce();
     }
 
-    private void InitializeVariables()
-    {
-        rb = GetComponent<Rigidbody>();
-        direction = Vector3.forward;
-    }
-
     private void Update() 
     {
         DestroyBullet();

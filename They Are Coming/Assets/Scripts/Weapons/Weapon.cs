@@ -2,16 +2,21 @@
 
 public abstract class Weapon : MonoBehaviour
 {
-    public GameObject visual;
     public GameObject bulletType;
     public BoxCollider boxCollider;
     public WeaponInfomation weaponInfo;
 
     public float nextFire;
+    
+    public bool initializedModel;
     public bool pickedUp;
 
     public void InitializeModel()
     {
+        if (initializedModel)
+        {
+            return;
+        }
         Instantiate(weaponInfo.model, transform);
     }
 
@@ -19,7 +24,6 @@ public abstract class Weapon : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider>();
         pickedUp = false;
-        visual = gameObject.transform.GetChild(0).gameObject;
     }
     
     public void Fire()
@@ -31,11 +35,6 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
-    public void DisableVisual()
-    {
-        visual.SetActive(false);
-    }
-
     public void InitializeProjectile() 
     {
         GameObject newBullet = Instantiate(bulletType, transform.position, Quaternion.identity, GameManager.Instance.BulletStorgage.transform);
@@ -45,12 +44,7 @@ public abstract class Weapon : MonoBehaviour
 
     public void PickedUpNewWeapon()
     {
-        pickedUp = true;
-        boxCollider.enabled = false;
-    }
-
-    public void DisableWeapon()
-    {
-        this.gameObject.SetActive(false);
+        this.pickedUp = true;
+        this.boxCollider.enabled = false;
     }
 }

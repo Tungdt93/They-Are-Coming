@@ -77,3 +77,5 @@ MonoBehaviour:
   bulletInfo: {fileID: 11400000, guid: 7fee36543ec16114c83c945e57b8b03f, type: 2}
   rb: {fileID: 0}
   direction: {x: 0, y: 0, z: 0}
+  timeDelay: 2
+  gunDamage: 0

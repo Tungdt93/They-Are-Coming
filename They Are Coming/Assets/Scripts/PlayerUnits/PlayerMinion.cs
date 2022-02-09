@@ -5,7 +5,6 @@ public class PlayerMinion : PlayerUnit
 {
     private void OnEnable()
     {
-        rb = GetComponent<Rigidbody>();
         InitializeVariables();
         InitializeModel();
         playerMain.OnPickedUpNewWeapon += InitializeWeapon;
@@ -19,11 +18,6 @@ public class PlayerMinion : PlayerUnit
     private void Update()
     {
         rb.velocity = Vector3.zero;
-    }
-
-    public void InitializeModel()
-    {
-        Instantiate(unitInfo.model, this.visual.transform);    
     }
 
     private void OnCollisionEnter(Collision collision)

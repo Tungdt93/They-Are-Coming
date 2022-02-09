@@ -13,6 +13,12 @@ public abstract class Bullet : MonoBehaviour, IProjectile
         Destroy(gameObject, timeDelay);
     }
 
+    public void InitializeVariables()
+    {
+        rb = GetComponent<Rigidbody>();
+        direction = Vector3.forward;
+        timeDelay = 3f;
+    }
     public void InstantiateModel()
     {
         Instantiate(bulletInfo.model, transform.position, Quaternion.identity, transform);
