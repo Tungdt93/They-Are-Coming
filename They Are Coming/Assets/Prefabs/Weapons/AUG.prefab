@@ -74,10 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05a9415f38843846b42e9158aff38a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visual: {fileID: 0}
-  bulletType: {fileID: 1884962445842579684, guid: 1a2606a93e216a84e9e7c75e1e2cd4e7,
+  bulletType: {fileID: 8518072716496682651, guid: 1a2606a93e216a84e9e7c75e1e2cd4e7,
     type: 3}
   boxCollider: {fileID: 0}
   weaponInfo: {fileID: 11400000, guid: 8730f704b23fd7142b0f8826d92f4189, type: 2}
   nextFire: 0
+  initializedModel: 0
   pickedUp: 0

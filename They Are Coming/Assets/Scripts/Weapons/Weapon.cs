@@ -2,7 +2,7 @@
 
 public abstract class Weapon : MonoBehaviour
 {
-    public GameObject bulletType;
+    public Bullet bulletType;
     public BoxCollider boxCollider;
     public WeaponInfomation weaponInfo;
 
@@ -37,9 +37,7 @@ public abstract class Weapon : MonoBehaviour
 
     public void InitializeProjectile() 
     {
-        GameObject newBullet = Instantiate(bulletType, transform.position, Quaternion.identity, GameManager.Instance.BulletStorgage.transform);
-        Bullet bullet = newBullet.GetComponent<Bullet>();
-        bullet.gunDamage = weaponInfo.damage;    
+        bulletType.InitializeBullet(transform.position, GameManager.Instance.BulletStorgage.transform);
     }
 
     public void PickedUpNewWeapon()

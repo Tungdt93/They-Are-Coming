@@ -23,7 +23,7 @@ public class PlayerMain : MonoBehaviour
     private bool hasTouchedRightWall;
     private bool hasTouchedLeftWall;
     private bool hasNewWeapon;
-    private int minions;
+    private int numberOfMinions;
 
     public GameObject SpawnPosition { get => spawnPosition; set => spawnPosition = value; }
     public GameObject WeaponPrefab { get => weaponPrefab; set => weaponPrefab = value; }
@@ -31,7 +31,6 @@ public class PlayerMain : MonoBehaviour
     public bool HasTouchedRightWall { get => hasTouchedRightWall; set => hasTouchedRightWall = value; }
     public bool HasTouchedLeftWall { get => hasTouchedLeftWall; set => hasTouchedLeftWall = value; }
     public bool HasNewWeapon { get => hasNewWeapon; set => hasNewWeapon = value; }
-    public int Minions { get => minions; set => minions = value; }
 
     private void Start()
     {
@@ -65,6 +64,7 @@ public class PlayerMain : MonoBehaviour
         hasTouchedRightWall = false;
         hasTouchedLeftWall = false;
         hasNewWeapon = true;
+        numberOfMinions = spawnPosition.transform.childCount;
     }
 
     private void Update()
@@ -138,16 +138,20 @@ public class PlayerMain : MonoBehaviour
         #region PowerUp
         if (other.CompareTag("PowerUp"))
         {
+            int amount;
+            numberOfMinions = spawnPosition.transform.childCount;
             if (other.TryGetComponent(out PowerUp powerUp))
             {
                 if (powerUp.Addition)
                 {
-                    int amount = powerUp.Value;
+                    amount = powerUp.Value;
                     GenerateNewMinions(amount);
-                }
+                } 
                 else
                 {
-
+                    amount = powerUp.Value;
+                    Debug.Log(amount);
+                    GenerateNewMinions(numberOfMinions * amount - numberOfMinions);
                 }
                 powerUp.InvokeEvent();
             }

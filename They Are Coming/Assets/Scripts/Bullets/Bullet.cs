@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public abstract class Bullet : MonoBehaviour, IProjectile
+public abstract class Bullet : MonoBehaviour
 {
     public BulletInformation bulletInfo;
     public Rigidbody rb;
-    public Vector3 direction;
     public float timeDelay;
     public int gunDamage;
 
@@ -13,20 +12,18 @@ public abstract class Bullet : MonoBehaviour, IProjectile
         Destroy(gameObject, timeDelay);
     }
 
-    public void InitializeVariables()
-    {
-        rb = GetComponent<Rigidbody>();
-        direction = Vector3.forward;
-        timeDelay = 3f;
-    }
+    public abstract void InitializeVariables();
+
     public void InstantiateModel()
     {
         Instantiate(bulletInfo.model, transform.position, Quaternion.identity, transform);
     }
 
-    public void OnAddingForce()
+    public abstract void InitializeBullet(Vector3 position, Transform bulletStorage);
+
+    public void OnAddingForce(Vector3 bulletDirection)
     {
-        rb.AddForce(bulletInfo.moveSpeed * direction, ForceMode.VelocityChange);      
+        rb.AddForce(bulletInfo.moveSpeed * bulletDirection, ForceMode.VelocityChange);      
     }
 
     private void OnTriggerEnter(Collider other) 
