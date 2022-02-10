@@ -8,6 +8,7 @@ public class PlayerMain : MonoBehaviour
     public static PlayerMain Instance;
 
     public event Action OnPickedUpNewWeapon = delegate { };
+    public event Action<GameObject[]> OnReachedFinishLine = delegate { };
 
     [SerializeField] private GameObject minionPrefab;
     [SerializeField] private GameObject spawnPosition;
@@ -15,6 +16,7 @@ public class PlayerMain : MonoBehaviour
     [SerializeField] private Weapon weapon;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float sideSpeed;
+    [SerializeField ]private GameObject[] minions;
 
     private CharacterController controller;
     private PlayerInput inputActions;
@@ -150,7 +152,6 @@ public class PlayerMain : MonoBehaviour
                 else
                 {
                     amount = powerUp.Value;
-                    Debug.Log(amount);
                     GenerateNewMinions(numberOfMinions * amount - numberOfMinions);
                 }
                 powerUp.InvokeEvent();
@@ -171,6 +172,17 @@ public class PlayerMain : MonoBehaviour
             other.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
         #endregion
+
+        #region FinishLine
+        if (other.CompareTag("FinishLine"))
+        {
+            if (other.TryGetComponent(out FinishLine finishLine))
+            {
+                 GetMinions();
+                 finishLine.GenerateRandomPositions(minions);
+            }
+        }
+        #endregion
     }
 
     private void CircleRadius() 
@@ -178,6 +190,16 @@ public class PlayerMain : MonoBehaviour
         foreach (Transform transform in spawnPosition.transform)
         {
             
+        }
+    }
+
+    private void GetMinions() 
+    {
+        minions = new GameObject[spawnPosition.transform.childCount];
+        for (int i = 0; i < minions.Length; i++)
+        {
+            minions[i] = spawnPosition.transform.GetChild(i).gameObject;
+            minions[i].GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 }

@@ -2,12 +2,11 @@
 
 public abstract class Weapon : MonoBehaviour
 {
-    public Bullet bulletType;
     public BoxCollider boxCollider;
+    public Bullet bulletType;
+    public BulletSpawner bulletSpawner;
     public WeaponInfomation weaponInfo;
-
     public float nextFire;
-    
     public bool initializedModel;
     public bool pickedUp;
 
@@ -17,12 +16,13 @@ public abstract class Weapon : MonoBehaviour
         {
             return;
         }
-        Instantiate(weaponInfo.model, transform);
+        Instantiate(weaponInfo.gunModel, transform);
     }
 
     public void InitializeVariables() 
     {
         boxCollider = GetComponent<BoxCollider>();
+        bulletSpawner = GetComponent<BulletSpawner>();
         pickedUp = false;
     }
     
@@ -37,7 +37,7 @@ public abstract class Weapon : MonoBehaviour
 
     public void InitializeProjectile() 
     {
-        bulletType.InitializeBullet(transform.position, GameManager.Instance.BulletStorgage.transform);
+        bulletSpawner.InitializeBullet(transform.position);
     }
 
     public void PickedUpNewWeapon()

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8171349117161013119}
   - component: {fileID: 5271438658163722516}
   - component: {fileID: 8741204240811456113}
+  - component: {fileID: 355009649537562932}
   m_Layer: 0
   m_Name: AUG
   m_TagString: Weapon
@@ -74,10 +75,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05a9415f38843846b42e9158aff38a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxCollider: {fileID: 0}
   bulletType: {fileID: 8518072716496682651, guid: 1a2606a93e216a84e9e7c75e1e2cd4e7,
     type: 3}
-  boxCollider: {fileID: 0}
+  bulletSpawner: {fileID: 0}
   weaponInfo: {fileID: 11400000, guid: 8730f704b23fd7142b0f8826d92f4189, type: 2}
   nextFire: 0
   initializedModel: 0
   pickedUp: 0
+--- !u!114 &355009649537562932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396027703381757574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9744e3a16ace8c4cb2c544b7437cf76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 0}
+  bullet: {fileID: 0}
+  firstBulletDirection: {x: 1, y: 0, z: 4}
+  thirdBulletDirection: {x: 1, y: 0, z: -4}

@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: AUG
   m_EditorClassIdentifier: 
   name: AUG
-  barrel: {fileID: 0}
   damage: 15
-  fireRate: 0.8
-  model: {fileID: 7315315126468033817, guid: a5686089a4bb5ac468df3ae8f8179161, type: 3}
+  fireRate: 1.5
+  BulletMoveSpeed: 30
+  gunModel: {fileID: 7315315126468033817, guid: a5686089a4bb5ac468df3ae8f8179161,
+    type: 3}
+  bulletModel: {fileID: 7395231121674827265, guid: 4c4fdf2eba3dc884eb2ed963803ba79c,
+    type: 3}

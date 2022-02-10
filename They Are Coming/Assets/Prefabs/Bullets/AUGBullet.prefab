@@ -74,8 +74,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfd66c836e51f0f4886dbe77b145e3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletInfo: {fileID: 11400000, guid: e4e7af19b53750640925a9873911b82b, type: 2}
+  weaponInfo: {fileID: 11400000, guid: 8730f704b23fd7142b0f8826d92f4189, type: 2}
   rb: {fileID: 0}
-  direction: {x: 0, y: 0, z: 0}
   timeDelay: 0
   gunDamage: 0

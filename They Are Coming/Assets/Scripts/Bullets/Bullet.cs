@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Bullet : MonoBehaviour
 {
-    public BulletInformation bulletInfo;
+    public WeaponInfomation weaponInfo;
     public Rigidbody rb;
     public float timeDelay;
     public int gunDamage;
@@ -16,14 +16,11 @@ public abstract class Bullet : MonoBehaviour
 
     public void InstantiateModel()
     {
-        Instantiate(bulletInfo.model, transform.position, Quaternion.identity, transform);
+        Instantiate(weaponInfo.bulletModel, transform.position, Quaternion.identity, transform);
     }
-
-    public abstract void InitializeBullet(Vector3 position, Transform bulletStorage);
-
     public void OnAddingForce(Vector3 bulletDirection)
     {
-        rb.AddForce(bulletInfo.moveSpeed * bulletDirection, ForceMode.VelocityChange);      
+        rb.AddForce(weaponInfo.BulletMoveSpeed * bulletDirection.normalized, ForceMode.VelocityChange);      
     }
 
     private void OnTriggerEnter(Collider other) 
