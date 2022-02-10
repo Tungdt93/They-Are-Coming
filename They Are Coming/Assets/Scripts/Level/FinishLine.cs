@@ -5,31 +5,45 @@ using UnityEngine;
 
 public class FinishLine : MonoBehaviour
 {
+    [SerializeField] private GameObject cube;
     [SerializeField] private Transform standPoint;
     [SerializeField] private float spacing; 
-    [SerializeField] private int numberOfRows;
-    [SerializeField] private int numberOfColumns;
+    [SerializeField] private int rows;
+    [SerializeField] private int columns;
     [SerializeField] private GameObject[] numberOfMinions;
 
     private float newXPosition;
     private float newZPosition;
-    private int rowCapacity;
+
+    private void OnEnable()
+    {
+        columns = 10;
+    }
 
     public void GenerateRandomPositions(GameObject[] minions)
     {
         numberOfMinions = minions;
-        numberOfRows = numberOfMinions.Length / rowCapacity;
+        if (numberOfMinions.Length % columns == 0)
+        {
+            rows = numberOfMinions.Length / columns;
+        }
+        else
+        {
+            rows = numberOfMinions.Length / columns + 1;
+        }
+        Debug.Log(rows);
         newXPosition = standPoint.position.x;
         newZPosition = standPoint.position.z;
-        for (int i = 0; i < numberOfRows; i++)
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < numberOfColumns; j++)
+            for (int j = 0; j < columns; j++)
             {
-                Vector3 newPos = new Vector3(newXPosition, transform.position.y, newZPosition);
+                Vector3 newPos = new Vector3(newXPosition, standPoint.position.y, newZPosition);
+                Instantiate(cube, newPos, Quaternion.identity);
                 newXPosition += spacing;
-            }       
-            newXPosition = transform.position.x + spacing / 2f;
-            newZPosition += spacing;
+            }
+            newXPosition = standPoint.position.x;
+            newZPosition -= spacing;
         }
     }
 }

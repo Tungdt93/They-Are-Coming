@@ -8,7 +8,6 @@ public class PlayerMain : MonoBehaviour
     public static PlayerMain Instance;
 
     public event Action OnPickedUpNewWeapon = delegate { };
-    public event Action<GameObject[]> OnReachedFinishLine = delegate { };
 
     [SerializeField] private GameObject minionPrefab;
     [SerializeField] private GameObject spawnPosition;

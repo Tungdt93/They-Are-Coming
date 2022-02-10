@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2503,7 +2503,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307351104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: -9.2, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1562338932}
@@ -2820,10 +2820,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a596e67e2ce77341bfb3469d86720f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cube: {fileID: 8608560123758399980, guid: 965cf8e764385f94685b5cf23925af72, type: 3}
   standPoint: {fileID: 1307351105}
-  spacing: 0
-  numberOfRows: 10
-  numberOfColumns: 5
+  spacing: 2
+  rows: 0
+  columns: 0
+  numberOfMinions: []
 --- !u!1 &1607430210
 GameObject:
   m_ObjectHideFlags: 0
