@@ -177,8 +177,11 @@ public class PlayerMain : MonoBehaviour
         {
             if (other.TryGetComponent(out FinishLine finishLine))
             {
-                 GetMinions();
-                 finishLine.GenerateRandomPositions(minions);
+                moveSpeed = 0f;
+                sideSpeed = 0f;
+                GetMinions();
+                finishLine.GenerateRandomPositions(minions);
+                finishLine.LineUp = true;
             }
         }
         #endregion

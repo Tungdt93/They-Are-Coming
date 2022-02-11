@@ -6,10 +6,11 @@ public abstract class PlayerUnit : MonoBehaviour
 
     public GameObject visual;
     public Transform weaponHolder;
+    public Transform spawnPoint;
     public Rigidbody rb;
     public PlayerUnitInfomation unitInfo;
 
-    public Vector3 centralizedDirection;
+    public Vector3 centralizeVector;
 
     public void InitializeVariables()
     {
@@ -19,6 +20,7 @@ public abstract class PlayerUnit : MonoBehaviour
             InitializeWeapon();
         }
         rb = GetComponent<Rigidbody>();
+        spawnPoint = playerMain.SpawnPosition.transform;
     }
     public void InitializeModel()
     {

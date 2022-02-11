@@ -20,6 +20,12 @@ public class PlayerMinion : PlayerUnit
         rb.velocity = Vector3.zero;
     }
 
+    private void CenterilizedInCenter() 
+    {
+        centralizeVector = spawnPoint.position - transform.position;
+        centralizeVector.Normalize();
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("RightWall"))
