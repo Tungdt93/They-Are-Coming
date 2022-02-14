@@ -3,11 +3,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
-public class PlayerMain : MonoBehaviour
+public class PlayerMain : MonoBehaviour, ISubcribers
 {
     public static PlayerMain Instance;
 
     public event Action OnPickedUpNewWeapon = delegate { };
+    public event Action<GameObject[]> OnReachedFinishLine = delegate { };
+    public event Action OnOutOfMinions = delegate { };
 
     [SerializeField] private GameObject minionPrefab;
     [SerializeField] private GameObject spawnPosition;
@@ -15,32 +17,46 @@ public class PlayerMain : MonoBehaviour
     [SerializeField] private Weapon weapon;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float sideSpeed;
-    [SerializeField ]private GameObject[] minions;
+    [SerializeField] private GameObject[] minions;
 
     private CharacterController controller;
+    private GameManager gameManager;
     private PlayerInput inputActions;
-    private Vector3 velocity;
+    private Vector3 direction;
     private Vector3 sideDirection;
+    private bool gameStarted;
     private bool hasTouchedRightWall;
     private bool hasTouchedLeftWall;
     private bool hasNewWeapon;
     private int numberOfMinions;
 
+
     public GameObject SpawnPosition { get => spawnPosition; set => spawnPosition = value; }
     public GameObject WeaponPrefab { get => weaponPrefab; set => weaponPrefab = value; }
     public Weapon Weapon { get => weapon; set => weapon = value; }
+    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
+    public Vector3 Direction { get => direction; set => direction = value; }
     public bool HasTouchedRightWall { get => hasTouchedRightWall; set => hasTouchedRightWall = value; }
     public bool HasTouchedLeftWall { get => hasTouchedLeftWall; set => hasTouchedLeftWall = value; }
     public bool HasNewWeapon { get => hasNewWeapon; set => hasNewWeapon = value; }
 
-    private void Start()
+    public int NumberOfMinions { get => numberOfMinions; set => numberOfMinions = value; }
+
+    private void Awake()
     {
         InitializeSingleton();
-        InitializeVariables(); 
+        InitializeVariables();
     }
+
+    private void Start()
+    {
+        SubscribeEvent();
+    }
+
     public void OnDisable()
     {
         inputActions.Disable();
+        UnsubscribeEvent();
     }
 
     private void InitializeSingleton()
@@ -57,11 +73,13 @@ public class PlayerMain : MonoBehaviour
 
     private void InitializeVariables()
     {
+        gameManager = GameManager.Instance;
         inputActions = new PlayerInput();
         inputActions.Enable();
         controller = GetComponent<CharacterController>();
         GenerateFirstMinion();
-        velocity = Vector3.back;
+        direction = Vector3.back;
+        gameStarted = false;    
         hasTouchedRightWall = false;
         hasTouchedLeftWall = false;
         hasNewWeapon = true;
@@ -70,8 +88,13 @@ public class PlayerMain : MonoBehaviour
 
     private void Update()
     {
+        if (!gameStarted)
+        {
+            return;
+        }
         Move(); 
         MoveSideways();
+        CheckMinionsQuantity();
     }
     private void GenerateFirstMinion()
     {
@@ -80,7 +103,7 @@ public class PlayerMain : MonoBehaviour
 
     private void Move()
     {
-        controller.Move(moveSpeed * Time.deltaTime * velocity);
+        controller.Move(moveSpeed * Time.deltaTime * direction.normalized);
     }
 
     public void GenerateNewMinions(int amount)
@@ -95,6 +118,16 @@ public class PlayerMain : MonoBehaviour
         }
     }
 
+    private void CheckMinionsQuantity()
+    {
+        numberOfMinions = spawnPosition.transform.childCount;
+        if (numberOfMinions == 0)
+        {
+            moveSpeed = 0f;
+            sideSpeed = 0f;
+            OnOutOfMinions?.Invoke();
+        }
+    }
     public Vector3 RandomPosition(Vector3 center, float radius)
     {
         Vector3 position;
@@ -175,14 +208,10 @@ public class PlayerMain : MonoBehaviour
         #region FinishLine
         if (other.CompareTag("FinishLine"))
         {
-            if (other.TryGetComponent(out FinishLine finishLine))
-            {
-                moveSpeed = 0f;
-                sideSpeed = 0f;
-                GetMinions();
-                finishLine.GenerateRandomPositions(minions);
-                finishLine.LineUp = true;
-            }
+            moveSpeed = 0f;
+            sideSpeed = 0f;
+            GetMinions();
+            OnReachedFinishLine?.Invoke(minions);
         }
         #endregion
     }
@@ -203,5 +232,20 @@ public class PlayerMain : MonoBehaviour
             minions[i] = spawnPosition.transform.GetChild(i).gameObject;
             minions[i].GetComponent<Rigidbody>().isKinematic = true;
         }
+    }
+
+    public void SubscribeEvent()
+    {
+        GameManager.Instance.OnGameStarted += GameStared;
+    }
+
+    public void UnsubscribeEvent()
+    {
+        GameManager.Instance.OnGameStarted -= GameStared;
+    }
+
+    private void GameStared(int obj)
+    {
+        gameStarted = true;
     }
 }

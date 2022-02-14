@@ -1,13 +1,16 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerMinion : PlayerUnit
 {
+    private float distance;
+
     private void OnEnable()
     {
         InitializeVariables();
         InitializeModel();
         playerMain.OnPickedUpNewWeapon += InitializeWeapon;
+        //StartCoroutine(TurnOnCharacterController());
     }
 
     private void OnDisable()
@@ -18,12 +21,34 @@ public class PlayerMinion : PlayerUnit
     private void Update()
     {
         rb.velocity = Vector3.zero;
+        
+        CenterilizedInCenter();
+    }
+
+    IEnumerator TurnOnCharacterController()
+    {
+        yield return new WaitForSeconds(2f);
+
+        rb.isKinematic = true;
+        controller.enabled = true;
+        turnOffRb = false;
+
+    }
+
+    private void Move()
+    {
+        controller.Move(playerMain.MoveSpeed * Time.deltaTime * playerMain.Direction.normalized);
     }
 
     private void CenterilizedInCenter() 
     {
-        centralizeVector = spawnPoint.position - transform.position;
-        centralizeVector.Normalize();
+        distance = Vector3.Distance(transform.position, spawnPoint.transform.position);
+        //if (!touched)
+        //{
+        //    centralizeVector = spawnPoint.position - transform.position;
+        //    centralizeVector.Normalize();
+        //    transform.Translate(centralizeVector * Time.deltaTime * centralizeSpeed);
+        //}
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -36,6 +61,10 @@ public class PlayerMinion : PlayerUnit
         if (collision.gameObject.CompareTag("LeftWall"))
         {
             playerMain.HasTouchedLeftWall = true;
+        }
+        if (collision.gameObject.CompareTag("PlayerMinion"))
+        {
+            touched = true;
         }
     }
 
@@ -63,6 +92,11 @@ public class PlayerMinion : PlayerUnit
         {
             playerMain.HasTouchedLeftWall = false;
         }
+
+        if (collision.gameObject.CompareTag("PlayerMinion"))
+        {
+            touched = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -70,5 +104,5 @@ public class PlayerMinion : PlayerUnit
         {
             Destroy(this.gameObject);
         }
-    }   
+    }
 }

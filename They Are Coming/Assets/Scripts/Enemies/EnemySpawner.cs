@@ -2,30 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour, ISubcribers
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float respawnCooldown;
     [SerializeField] private int enemiesSpawned;
     [SerializeField] private int maxEnemiesSpawned;
+    [SerializeField] private bool isSpawning;
 
+    private GameManager gameManager;
     private Vector3 spawnPosition;
     private Vector3 direction;
-    private bool isSpawning;
+    private float defaultMoveSpeed;
     private float timeToSpawn;
     private float timer;
+    private int numberOfEnemies;
+
+    public bool IsSpawning { get => isSpawning; set => isSpawning = value; }
+    public int NumberOfEnemies { get => numberOfEnemies; set => numberOfEnemies = value; }
+
+    private void Start()
+    {
+        SubscribeEvent();
+    }
 
     private void OnEnable()
     {
-       
         InitializeVariables();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeEvent();
     }
 
     private void InitializeVariables()
     {
-        isSpawning = true;
+        moveSpeed = 0f;
+        isSpawning = false;
+        gameManager = GameManager.Instance;
         direction = Vector3.back;
+        defaultMoveSpeed = 10f;
         timer = 0f;
     }
 
@@ -34,11 +52,18 @@ public class EnemySpawner : MonoBehaviour
         Move();      
         SpawnEnemy();
         LimitEnemiesSpawned();
+        GetNumberOfEnemies();
     }
 
     private void Move()
     {
         transform.Translate(moveSpeed * Time.deltaTime * direction);
+    }
+
+    private int GetNumberOfEnemies()
+    {
+        numberOfEnemies = this.transform.childCount;
+        return numberOfEnemies;
     }
 
     private void SpawnEnemy()
@@ -48,7 +73,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        timer = Time.time;
+        timer += Time.deltaTime;
         if (timer >= timeToSpawn)
         {
             spawnPosition = RandomSpawnPosition();
@@ -73,5 +98,21 @@ public class EnemySpawner : MonoBehaviour
         {
             isSpawning = false;
         }
+    }
+
+    public void SubscribeEvent()
+    {
+        GameManager.Instance.OnGameStarted += CheckGameStarted;
+    }
+
+    public void UnsubscribeEvent()
+    {
+        GameManager.Instance.OnGameStarted -= CheckGameStarted;
+    }
+
+    private void CheckGameStarted(int obj)
+    {
+        isSpawning = true;
+        moveSpeed = defaultMoveSpeed;
     }
 }

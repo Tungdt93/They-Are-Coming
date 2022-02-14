@@ -15,6 +15,6 @@ MonoBehaviour:
   name: Minion
   radiusCheck: 16
   health: 10
-  moveSpeed: 16
-  chaseSpeed: 18
+  moveSpeed: 14
+  chaseSpeed: 16
   model: {fileID: 7726283205401206537, guid: 7f3fd600a61fbc344a73cdeb278f79d9, type: 3}

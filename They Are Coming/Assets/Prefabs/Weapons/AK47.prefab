@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 6557206044080043269}
   - component: {fileID: -3658490118081182466}
   - component: {fileID: -757746431066393963}
+  - component: {fileID: -4861271920989751638}
   - component: {fileID: 6557206044080043268}
   - component: {fileID: -747798916213152977}
+  - component: {fileID: 3173575788919172303}
   m_Layer: 0
   m_Name: AK47
   m_TagString: Weapon
@@ -63,6 +65,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &-4861271920989751638
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6557206044080043271}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c6524bc9836f59a46bc8d5ae5994cc07, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &6557206044080043268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,3 +118,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
   bullet: {fileID: 0}
+--- !u!114 &3173575788919172303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6557206044080043271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9645d4239798064fbb2e38c3ea857ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}

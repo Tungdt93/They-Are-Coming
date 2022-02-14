@@ -4,37 +4,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class FinishLine : MonoBehaviour
+public class FinishLine : MonoBehaviour, ISubcribers
 {
     [SerializeField] private GameObject[] finishedMinions;
     [SerializeField] private Transform standPoint;
-    [SerializeField] private float spacing; 
+    [SerializeField] private float spacing;
 
-    [SerializeField] private List<Vector3> positions;
+    private PlayerMain playerMain;
+    private List<Vector3> positions;
     private List<int> selectedIndex;
-    [SerializeField] private bool lineUp;
     private float newXPosition;
     private float newZPosition;
     private int rows;
     private int columns;
 
-    public bool LineUp { get => lineUp; set => lineUp = value; }
-
-    private void OnEnable()
+    private void Start()
     {
+        InitializeVariables();
+        SubscribeEvent();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeEvent();
+    }
+
+    private void InitializeVariables()
+    {
+        playerMain = PlayerMain.Instance;
         positions = new List<Vector3>();
         selectedIndex = new List<int>();
-        lineUp = false;
         columns = 10;
     }
 
+    public void SubscribeEvent()
+    {
+        playerMain.OnReachedFinishLine += GenerateRandomPositions;
+    }
+
+    public void UnsubscribeEvent()
+    {
+        playerMain.OnReachedFinishLine -= GenerateRandomPositions;
+    }
+
+
     private void Update() 
     {
-        // if (!lineUp) 
-        // {
-        //     return;
-        // }
-        // MinionLindingUp();
+        
     }
 
     public void GenerateRandomPositions(GameObject[] minions)

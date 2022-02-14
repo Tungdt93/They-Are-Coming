@@ -2,7 +2,7 @@
 
 public class AK47 : Weapon
 {
-    private void OnEnable()
+    private void Start()
     {
         InitializeModel();
         InitializeVariables();
@@ -10,10 +10,7 @@ public class AK47 : Weapon
 
     private void Update() 
     {
-        if (!pickedUp) 
-        {
-            return;
-        }
-        Fire();
+        CheckGameState();
+        AllowToShoot();
     }
 }

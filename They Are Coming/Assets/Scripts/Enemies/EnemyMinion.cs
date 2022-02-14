@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyMinion : MonoBehaviour, IDamageable
+public class EnemyMinion : MonoBehaviour, IDamageable, ISubcribers
 {
     [SerializeField] private EnemyInfomation enemyInfo;
     [SerializeField] private Transform target;
@@ -9,14 +9,21 @@ public class EnemyMinion : MonoBehaviour, IDamageable
 
     private Rigidbody rb;
     private CharacterController controller;
+    private PlayerMain playerMain;
     private Vector3 direction;
-
+    private float moveSpeed;
     private bool isChasing;
 
     private void OnEnable()
     {
         InitializeVariables();     
         InstantiateModel();
+        SubscribeEvent();
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeEvent();
     }
 
     private void Update()
@@ -25,10 +32,27 @@ public class EnemyMinion : MonoBehaviour, IDamageable
         Move();
     }
 
+    public void SubscribeEvent()
+    {
+        playerMain.OnOutOfMinions += MinionStopMoving;
+    }
+
+    public void UnsubscribeEvent()
+    {
+        playerMain.OnOutOfMinions -= MinionStopMoving;
+    }
+
+    private void MinionStopMoving()
+    {
+        moveSpeed = 0f;
+    }
+
     private void InitializeVariables()
     {
         rb = GetComponent<Rigidbody>();
         controller = GetComponent<CharacterController>();
+        playerMain = PlayerMain.Instance;
+        moveSpeed = enemyInfo.moveSpeed;
         direction = Vector3.back;
         currentHealth = enemyInfo.health;
     }
@@ -56,14 +80,13 @@ public class EnemyMinion : MonoBehaviour, IDamageable
     {
         if (other.CompareTag("PlayerMinion"))
         {
-            other.gameObject.SetActive(false);
+            Destroy(other.gameObject);
         }
     }
 
     private void Move()
     {
-        controller.Move(enemyInfo.moveSpeed * Time.deltaTime * direction.normalized);
-        //MovePosition(transform.position + enemyInfo.moveSpeed * Time.deltaTime * direction);
+        controller.Move(moveSpeed * Time.deltaTime * direction.normalized);
     }
 
     private void CheckPlayerInRange()

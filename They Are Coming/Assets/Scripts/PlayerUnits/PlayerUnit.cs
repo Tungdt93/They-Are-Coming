@@ -8,9 +8,13 @@ public abstract class PlayerUnit : MonoBehaviour
     public Transform weaponHolder;
     public Transform spawnPoint;
     public Rigidbody rb;
+    public CharacterController controller;
     public PlayerUnitInfomation unitInfo;
 
     public Vector3 centralizeVector;
+    public float centralizeSpeed;
+    public bool turnOffRb;
+    public bool touched;
 
     public void InitializeVariables()
     {
@@ -20,7 +24,9 @@ public abstract class PlayerUnit : MonoBehaviour
             InitializeWeapon();
         }
         rb = GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
         spawnPoint = playerMain.SpawnPosition.transform;
+        centralizeSpeed = 100f;
     }
     public void InitializeModel()
     {

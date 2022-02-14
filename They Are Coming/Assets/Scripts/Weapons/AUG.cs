@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AUG : Weapon
 {
-    private void OnEnable()
+    private void Start()
     {
         InitializeModel();
         InitializeVariables();
@@ -10,10 +10,7 @@ public class AUG : Weapon
 
     private void Update() 
     {
-        if (!pickedUp) 
-        {
-            return;
-        }
-        Fire();
+        CheckGameState();
+        AllowToShoot();
     }
 }
