@@ -3,20 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUpHolderAnimation : ObjectAnimation, ISubcribers
+public class PowerUpHolderAnimation : ObjectAnimation, ISubcribers, IInitializeVariables
 {
     private PowerUpHolder powerUpHolder;
+    private int deactivateHash;
 
     private void OnEnable()
     {
-        animator = GetComponent<Animator>();
-        powerUpHolder = GetComponent<PowerUpHolder>();
+        InitializeVariables();
         SubscribeEvent();
     }
 
     private void OnDisable()
     {
         UnsubscribeEvent();
+    }
+
+    public void InitializeVariables()
+    {
+        animator = GetComponent<Animator>();
+        powerUpHolder = GetComponent<PowerUpHolder>();
+        deactivateHash = Animator.StringToHash("Deactivate");
     }
 
     public void SubscribeEvent()
@@ -31,6 +38,6 @@ public class PowerUpHolderAnimation : ObjectAnimation, ISubcribers
 
     private void DeactivateHolderAnim()
     {
-        animator.SetBool("Deactivate", true);
-    }
+        animator.SetBool(deactivateHash, true);
+    }   
 }

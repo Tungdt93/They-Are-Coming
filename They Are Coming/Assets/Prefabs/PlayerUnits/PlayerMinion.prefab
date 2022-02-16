@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 6617523090205577860}
   - component: {fileID: 6301024116027432531}
   - component: {fileID: -1482193774321103694}
+  - component: {fileID: 5515231985125022094}
   - component: {fileID: 4181504637327934385}
   m_Layer: 0
   m_Name: PlayerMinion
@@ -114,6 +115,25 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!95 &5515231985125022094
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2149368057723459541}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: f7e006cf41233d542a19819347440518, type: 2}
+  m_Controller: {fileID: 9100000, guid: 78302ee070304f842b168746d92d6b96, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &4181504637327934385
 MonoBehaviour:
   m_ObjectHideFlags: 0

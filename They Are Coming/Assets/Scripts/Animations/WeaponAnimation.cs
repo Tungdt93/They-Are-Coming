@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponAnimation : ObjectAnimation, ISubcribers
+public class WeaponAnimation : ObjectAnimation, ISubcribers, IInitializeVariables
 {
     private Weapon weapon;
+    private int PickedUpHash;
+
     private void OnEnable()
     {
-        animator = GetComponent<Animator>();
-        weapon = GetComponent<Weapon>();
+        InitializeVariables();
         SubscribeEvent();
     }
 
@@ -17,11 +18,17 @@ public class WeaponAnimation : ObjectAnimation, ISubcribers
         UnsubscribeEvent();
     }
 
+    public void InitializeVariables()
+    {
+        animator = GetComponent<Animator>();
+        weapon = GetComponent<Weapon>();
+        PickedUpHash = Animator.StringToHash("PickedUp");
+    }
+
     public void SubscribeEvent()
     {
         weapon.OnPickedUp += PickedUpNewWeapon;
     }
-
 
     public void UnsubscribeEvent()
     {
@@ -30,6 +37,6 @@ public class WeaponAnimation : ObjectAnimation, ISubcribers
 
     private void PickedUpNewWeapon()
     {
-        animator.SetBool("PickedUp", true);
+        animator.SetBool(PickedUpHash, true);
     }
 }

@@ -14,7 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Main
   health: 0
-  moveSpeed: 10
-  sideSpeed: 40
-  model: {fileID: 7728965791901028785, guid: 24b1935b840cac44898fd199f2a00299, type: 3}
+  model: {fileID: 162199048856200131, guid: bd810c885f4e9694395af119b85c79ba, type: 3}
   weaponHolder: {fileID: 0}

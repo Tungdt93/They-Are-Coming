@@ -10,5 +10,6 @@ public class CameraManager : MonoBehaviour
     private void Update()
     {
         transform.position = target.position + offset;
+        transform.LookAt(target);   
     }
 }

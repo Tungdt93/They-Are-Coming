@@ -6,11 +6,17 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour, ISubcribers
 {
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float dersiredDuration;
 
-    private GameManager gameManager;
+    private CharacterController controller;
+   private Vector3 turnDirection;
     private Vector3 direction;
+    private Quaternion desiredRotation;
     private float defaultSpeed;
+    private float elapsedTime;
+    private float percentageComplete;
     private bool gameStarted;
+    private bool turning;
 
     public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
 
@@ -21,20 +27,17 @@ public class CameraFollow : MonoBehaviour, ISubcribers
 
     private void OnEnable()
     {
-        //gameManager = GameManager.Instance;
         InitializeVariables();
-
-        //SubscribeEvent();
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.OnGameStarted -= GameStarted;
+        UnsubscribeEvent();
     }
 
     private void InitializeVariables()
     {
-
+        controller = GetComponent<CharacterController>();
         defaultSpeed = 10f;
         direction = Vector3.back;
         gameStarted = false;
@@ -46,12 +49,16 @@ public class CameraFollow : MonoBehaviour, ISubcribers
         {
             return;
         }
+        if (turning)
+        {
+            SmoothTurning();
+        }
         Move();
     }
 
     private void Move()
     {
-        transform.Translate(moveSpeed * Time.deltaTime * direction);
+         controller.Move(moveSpeed * Time.deltaTime * -(transform.forward).normalized);
     }
 
     public void SubscribeEvent()
@@ -61,11 +68,39 @@ public class CameraFollow : MonoBehaviour, ISubcribers
 
     public void UnsubscribeEvent()
     {
-        
+        GameManager.Instance.OnGameStarted -= GameStarted;
     }
 
     public void GameStarted(int obj)
     {
         gameStarted = true;
+    }
+
+    private void OnTriggerEnter(Collider other) 
+    {
+        #region Cross
+        if (other.CompareTag("Cross"))
+        {
+            if (other.TryGetComponent(out Cross cross))
+            {            
+                turnDirection = cross.GetTurnDirection();
+                desiredRotation = Quaternion.Euler(turnDirection);
+                turning = true;             
+            }
+        }
+        #endregion
+    }
+
+    private void SmoothTurning()
+    {
+        elapsedTime += Time.deltaTime;
+        percentageComplete = elapsedTime / dersiredDuration;
+        transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, percentageComplete);
+        if ( transform.rotation == desiredRotation)
+        {            
+            turning = false;
+            elapsedTime = 0f;
+            percentageComplete = 0f;
+        }
     }
 }

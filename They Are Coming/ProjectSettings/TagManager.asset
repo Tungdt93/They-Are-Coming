@@ -14,6 +14,7 @@ TagManager:
   - Obstacle
   - Weapon
   - FinishLine
+  - Cross
   layers:
   - Default
   - TransparentFX
